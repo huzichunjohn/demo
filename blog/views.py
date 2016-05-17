@@ -5,3 +5,6 @@ from django.shortcuts import render
 @login_required
 def index(request):
     return render(request, "blog/index.html")
+
+def hello(request):
+    return HttpResponse("Hello world.")

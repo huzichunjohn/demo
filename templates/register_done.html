@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}register done{% endblock %}
+
+{% block content %}
+  <h2>you have registered!</h2>
+  <p>click<a href="{% url 'django.contrib.auth.views.login' %}">here</a>to login.</p>
+{% endblock %}
