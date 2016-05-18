@@ -4,5 +4,36 @@
 {% block content %}
   <a href="{% url 'django.contrib.auth.views.logout' %}">logout</a>
   <a href="{% url 'django.contrib.auth.views.login' %}">login</a>
-  <p>This is my first blog</p>
+  {% if user.is_authenticated %}
+    <p>welcome {{ user.username }}.</p>
+  {% endif %}  
+
+  {% for blog in blogs %}
+    <h2>{{ blog.title }}</h2>
+    <p>{{ blog.timestamp }}</p>
+    <p>{{ blog.body }}</p>
+    {% if user.username == blog.owner.username or user.is_superuser %}
+      <a href="{% url 'edit' blog.id %}">edit</a>
+      <a href="{% url 'delete' blog.id %}">delete</a> 
+    {% endif %}
+  {% endfor %}
+
+  <div>
+    <span> 
+
+      {% if blogs.has_previous %}
+        <a href="?page={{ blogs.previous_page_number }}">previous</a>
+      {% endif %}
+      
+      <span>
+        page {{ blogs.number }} of {{ blogs.paginator.num_pages }}.
+      </span>
+  
+      {% if blogs.has_next %}
+        <a href="?page={{ blogs.next_page_number }}">next</a>
+      {% endif %}
+
+    </span>
+  </div>
+
 {% endblock %}
