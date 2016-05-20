@@ -4,16 +4,22 @@
 {% block content %}
   <a href="{% url 'django.contrib.auth.views.logout' %}">logout</a>
   <a href="{% url 'django.contrib.auth.views.login' %}">login</a>
+  <a href="{% url 'add' %}">add blog</a>
   {% if user.is_authenticated %}
     <p>welcome {{ user.username }}.</p>
   {% endif %}  
 
   {% for blog in blogs %}
-    <h2>{{ blog.title }}</h2>
+    <h2>{{ blog.id }} {{ blog.title }}</h2>
     <p>{{ blog.timestamp }}</p>
     <p>{{ blog.body }}</p>
+    <p>{{ blog.owner.username }}</p>
     {% if user.username == blog.owner.username or user.is_superuser %}
       <a href="{% url 'edit' blog.id %}">edit</a>
+      <form method="post" action="{% url 'delete' blog.id %}">
+        {% csrf_token %}
+        <input type="submit" value="delete">
+      </form>
       <a href="{% url 'delete' blog.id %}">delete</a> 
     {% endif %}
   {% endfor %}

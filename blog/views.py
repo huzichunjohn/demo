@@ -8,13 +8,16 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import BlogForm
 from .models import Blog
 
+from datetime import datetime
+from pytz import timezone
+
 @login_required
 def index(request):
     #if request.user.is_superuser:
     #    blogs = Blog.objects.all()
     #else:
     #    blogs = Blog.objects.filter(owner__username__exact=request.user)
-    blog_list = Blog.objects.all()
+    blog_list = Blog.objects.all().order_by('-timestamp')
     paginator = Paginator(blog_list, 5)
 
     page = request.GET.get('page')
@@ -52,6 +55,8 @@ def edit(request, id):
     if request.user.username != blog.owner.username and not request.user.is_superuser:
        return HttpResponseRedirect(reverse('index')) 
    
+    blog.timestamp = datetime.now()
+
     if request.method == "POST":
         form = BlogForm(request.POST, instance=blog)
         if form.is_valid:
@@ -66,5 +71,15 @@ def edit(request, id):
 
 @login_required
 def delete(request, id):
-    return HttpResponse("delete blog %s." % (id))
-
+    if request.method == "POST":
+        try:
+            blog = Blog.objects.get(pk=id)
+        except Blog.DoesNotExist:
+            raise Http404
+    
+        if request.user.username != blog.owner.username and not request.user.is_superuser:
+            return HttpResponseRedirect(reverse('index'))
+    
+        blog.delete()
+        return HttpResponse("delete blog %s successful." % (id))
+    return HttpResponse("the Get method is not supported, use Post.")
