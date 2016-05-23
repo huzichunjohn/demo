@@ -39,6 +39,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'debug_toolbar',
     'blog',
+    'rest_framework',
+    'rest_framework_swagger',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -132,3 +134,8 @@ DEBUG_TOOLBAR_PANELS = [
     'debug_toolbar.panels.redirects.RedirectsPanel',
 ]
 DEBUG_TOOLBAR_CONFIG = {"JQUERY_URL": "http://code.jquery.com/jquery-2.1.1.min.js"}
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+    'PAGE_SIZE': 10
+}

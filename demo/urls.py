@@ -9,6 +9,8 @@ urlpatterns = [
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^blog/', include('blog.urls')),
+    url(r'^api/', include('api.urls')),
+    url(r'^docs/', include('rest_framework_swagger.urls')),
     url(r'^accounts/login/$', 'django.contrib.auth.views.login'),
     url(r'^accounts/logout/$', 'django.contrib.auth.views.logout', \
         {'next_page': '/accounts/login/'}),
