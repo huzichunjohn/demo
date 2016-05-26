@@ -6,7 +6,9 @@
   <h2>edit blog</h2>
   <form action="{% url 'edit' blog.id %}" method="post">
     {% csrf_token %}
-    {{ form }}
+    <table>
+      {{ form.as_table }}
+    </table>
     <input type="submit" value="edit" />
   </form>
 
