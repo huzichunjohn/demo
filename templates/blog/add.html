@@ -6,7 +6,9 @@
   <h2>add blog</h2>
   <form action="{% url 'add' %}" method="post">
     {% csrf_token %}
-    {{ form }}
+    <table>
+      {{ form.as_table }}
+    </table>
     <input type="submit" value="add" />
   </form>
 

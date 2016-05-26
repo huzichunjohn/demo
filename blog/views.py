@@ -40,10 +40,9 @@ def add(request):
         if form.is_valid():
             form.save()
     	    return HttpResponseRedirect(reverse('index'))    
-    kwargs = {}
-    kwargs.update(csrf(request)) 
-    kwargs['form'] = BlogForm(request.POST)
-    return render_to_response('blog/add.html', kwargs)
+    else:
+        form = BlogForm()
+    return render_to_response('blog/add.html', {"form": form}, context_instance=RequestContext(request))
 
 @login_required 
 def edit(request, id):
