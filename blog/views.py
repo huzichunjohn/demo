@@ -58,15 +58,12 @@ def edit(request, id):
 
     if request.method == "POST":
         form = BlogForm(request.POST, instance=blog)
-        if form.is_valid:
+        if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('index'))
-
-    kwargs = {}
-    kwargs.update(csrf(request))
-    kwargs['form'] = BlogForm(instance=blog) 
-    kwargs['blog'] = blog
-    return render_to_response('blog/edit.html', kwargs) 
+    else:
+	form = BlogForm(instance=blog)
+    return render_to_response('blog/edit.html', {"form": form, "blog": blog}, context_instance=RequestContext(request)) 
 
 @login_required
 def delete(request, id):
