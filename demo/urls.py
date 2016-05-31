@@ -9,6 +9,7 @@ urlpatterns = [
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^blog/', include('blog.urls')),
+    url(r'^upload/', include('upload.urls')),
     url(r'^api/', include('api.urls')),
     url(r'^docs/', include('rest_framework_swagger.urls')),
     url(r'^accounts/login/$', 'django.contrib.auth.views.login'),
