@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}upload file{% endblock %}
+
+{% block content %}
+
+  <h2>download file</h2>
+  <table>
+    {% for file in files %}
+    <tr>
+      <td width="60%">{{ file }}</td>
+      <td width="40%" align="center"><a href="/download/{{ file }}">Download</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+
+{% endblock %}
