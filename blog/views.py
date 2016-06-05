@@ -10,6 +10,8 @@ from .models import Blog
 
 from datetime import datetime
 from pytz import timezone
+import StringIO
+import xlsxwriter
 
 @login_required
 def index(request):
@@ -39,7 +41,7 @@ def add(request):
         form = BlogForm(request.POST)
         if form.is_valid():
             form.save()
-    	    return HttpResponseRedirect(reverse('index'))    
+    	    return HttpResponseRedirect(reverse('blog:index'))    
     else:
         form = BlogForm()
     return render_to_response('blog/add.html', {"form": form}, context_instance=RequestContext(request))
@@ -60,7 +62,7 @@ def edit(request, id):
         form = BlogForm(request.POST, instance=blog)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('index'))
+            return HttpResponseRedirect(reverse('blog:index'))
     else:
 	form = BlogForm(instance=blog)
     return render_to_response('blog/edit.html', {"form": form, "blog": blog}, context_instance=RequestContext(request)) 
@@ -79,3 +81,27 @@ def delete(request, id):
         blog.delete()
         return HttpResponse("delete blog %s successful." % (id))
     return HttpResponse("the Get method is not supported, use Post.")
+
+@login_required
+def download(request):
+    blogs = Blog.objects.all()
+
+    buffer = StringIO.StringIO()
+    workbook = xlsxwriter.Workbook(buffer)
+    worksheet = workbook.add_worksheet("Blog")
+
+    worksheet.write_string(0, 0, "title")
+    worksheet.write_string(0, 1, "timestamp")
+    worksheet.write_string(0, 2, "username")
+
+    for index, blog in enumerate(blogs):
+	worksheet.write_string(index+1, 0, blog.title)
+	worksheet.write(index+1, 1, blog.timestamp.strftime("%Y-%m-%d"))
+	worksheet.write_string(index+1, 2, blog.owner.username)
+    workbook.close()
+
+    output = buffer.getvalue()    
+    response = HttpResponse(content_type="application/vnd.ms-excel")
+    response['Content-Disposition'] = 'attachment; filename=blog.xlsx'
+    response.write(output)
+    return response
