@@ -18,5 +18,7 @@ urlpatterns = [
         {'next_page': '/accounts/login/'}),
     url(r'^accounts/register/$', views.register, name='register'),
     url(r'^accounts/register/done/$', views.register_done, name='register_done'),
+    url(r'^rest-auth/', include('rest_auth.urls')),
+    url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'^admin/', include(admin.site.urls)),
 ]

@@ -42,6 +42,11 @@ INSTALLED_APPS = (
     'blog',
     'rest_framework',
     'rest_framework_swagger',
+    'rest_framework.authtoken',
+    'rest_auth',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -137,11 +142,24 @@ DEBUG_TOOLBAR_PANELS = [
 DEBUG_TOOLBAR_CONFIG = {"JQUERY_URL": "http://code.jquery.com/jquery-2.1.1.min.js"}
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+	'rest_framework.authentication.TokenAuthentication',
+	'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_RENDER_CLASSES': ('rest_framework.renders.JSONRender'),
     'PAGE_SIZE': 10
+}
+
+SWAGGER_SETTINGS = {
+    'api_path': '/',
+    'is_authenticated': False,
+    'is_superuser': False,
 }
 
 CRONJOBS = [
     ('*/5 * * * *', 'blog.cron.my_scheduled_job', '>> /tmp/scheduled_job.log'),
     ('*/1 * * * *', 'django.core.management.call_command', ['dumpdata', 'blog'], {'indent': 4}, '> /tmp/blog.json'),
 ]
+
+SITE_ID = 1
