@@ -8,6 +8,7 @@ urlpatterns = [
     # url(r'^$', 'demo.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
+    url(r'^$', views.index, name='index'),
     url(r'^blog/', include('blog.urls', namespace='blog')),
     url(r'^upload/', include('upload.urls')),
     url(r'^download/', include('download.urls')),
