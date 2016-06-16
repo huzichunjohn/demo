@@ -83,10 +83,6 @@ TEMPLATES = [
     },
 ]
 
-TEMPLATE_DIRS = (
-    BASE_DIR + '/templates/',
-)
-
 WSGI_APPLICATION = 'demo.wsgi.application'
 
 
