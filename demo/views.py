@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from .forms import RegistrationForm
 from datetime import datetime
 import json
+from django.core.cache import cache
 
 def register(request):
     if request.method == 'POST':
@@ -24,3 +25,13 @@ def register_done(request):
 def index(request):
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     return HttpResponse(json.dumps({"datetime": now}), content_type='application/json')
+
+def get(request):
+    data = cache.get("mydemo")
+    if not data:
+	data = "empty"
+    return HttpResponse(data)
+
+def set(request):
+    cache.set("mydemo", "hello world", 60)
+    return HttpResponse("ok")
