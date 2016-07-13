@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from django.http import Http404
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, mixins, generics
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -27,40 +27,30 @@ class ExampleView(APIView):
 	}
 	return Response(content)
 
-class BlogList(APIView):
-    def get(self, request, format=None):
-	blogs = Blog.objects.all()
-	serializer = BlogSerializer(blogs, many=True, context={'request': request})
-	return Response(serializer.data)
+class BlogList(mixins.ListModelMixin,
+	       mixins.CreateModelMixin,
+	       generics.GenericAPIView):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer
 
-    def post(self, request, format=None):
-	serializer = BlogSerializer(data=request.data, context={'request': request})
-	if serializer.is_valid():
-	    serializer.save()
-	    return Response(serializer.data)
-	return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def get(self, request, *args, **kwargs):
+	return self.list(request, *args, **kwargs)
 
-class BlogDetail(APIView):
-    def get_object(self, pk):
-	try:
-	    return Blog.objects.get(pk=pk)
-	except Blog.DoesNotExist:
-	    raise Http404
+    def post(self, request, *args, **kwargs):
+	return self.create(request, *args, **kwargs)
 
-    def get(self, request, pk, format=None):
-	blog = self.get_object(pk)
-	serializer = BlogSerializer(blog, context={'request': request})
-	return Response(serializer.data)
+class BlogDetail(mixins.RetrieveModelMixin,
+	         mixins.UpdateModelMixin,
+	         mixins.DestroyModelMixin,
+	         generics.GenericAPIView):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer
 
-    def put(self, request, pk, format=None):
-	blog = self.get_object(pk)
-	serializer = BlogSerializer(blog, data=request.data, context={'request': request})
-	if serializer.is_valid():
-	    serializer.save()
-	    return Response(serializer.data)
-	return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-	
-    def delete(self, request, pk, format=None):
-	blog = self.get_object(pk)
-	blog.delete()
-	return Response(status=status.HTTP_204_NO_CONTENT) 
+    def get(self, request, *args, **kwargs):
+	return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+	return self.update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+	return self.destroy(request, *args, **kwargs)
