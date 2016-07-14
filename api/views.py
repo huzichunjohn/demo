@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User, Group
 from django.http import Http404
+from django.shortcuts import render
+from django.template.context import RequestContext
 from rest_framework import viewsets, status, mixins, generics
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -8,6 +10,7 @@ from rest_framework.views import APIView
 from rest_framework.throttling import UserRateThrottle
 from api.serializers import UserSerializer, GroupSerializer, BlogSerializer
 from blog.models import Blog
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 class OncePerDayUserThrottle(UserRateThrottle):
     rate = '20/day'
@@ -31,6 +34,18 @@ class ExampleView(APIView):
 	}
 	return Response(content)
 
+class RestrictedView(APIView):
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (JSONWebTokenAuthentication,)
+
+    def get(self, request):
+	data = {
+	    'id': request.user.id,
+	    'username': request.user.username,
+	    'token': str(request.auth)
+	}
+	return Response(data)
+
 class BlogList(generics.ListCreateAPIView):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
@@ -40,3 +55,5 @@ class BlogDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
 
+def index(request):
+    return render(request, 'api/index.html', context_instance=RequestContext(request))

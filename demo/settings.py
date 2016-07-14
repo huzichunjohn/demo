@@ -142,8 +142,10 @@ DEBUG_TOOLBAR_CONFIG = {"JQUERY_URL": "http://code.jquery.com/jquery-2.1.1.min.j
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
     'DEFAULT_AUTHENTICATION_CLASSES': (
+	'rest_framework.authentication.BasicAuthentication',
 	'rest_framework.authentication.TokenAuthentication',
 	'rest_framework.authentication.SessionAuthentication',
+	'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
     'DEFAULT_RENDER_CLASSES': ('rest_framework.renders.JSONRender'),
     'PAGE_SIZE': 10,
@@ -152,8 +154,8 @@ REST_FRAMEWORK = {
 	'api.throttles.SustainedRateThrottle'
     ),
     'DEFAULT_THROTTLE_RATES': {
-	'burst': '6/min',
-	'sustained': '10/day'
+	'burst': '60/min',
+	'sustained': '1000/day'
     }
 }
 

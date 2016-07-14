@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}API{% endblock %}
+
+{% block header %}
+  <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      var credentials = {
+	username: "root",
+	password: "123456"
+      };	
+
+      $.post("http://localhost:8000/api/api-token-auth", credentials, function(auth) {
+	$.ajax({
+	  type: "GET",
+	  url: "http://localhost:8000/api/restricted/",
+	  beforeSend: function(xhr) {
+	    xhr.setRequestHeader("Authorization", "JWT "+ auth.token);
+	  },
+	  success: function(data) {
+	    console.log(data);
+	  }
+	});
+      });
+    });
+  </script>
+{% endblock %}
+
+{% block content %}
+  <h2>hello world.</h2>
+{% endblock %}
