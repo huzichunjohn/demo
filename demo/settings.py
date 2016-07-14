@@ -146,7 +146,15 @@ REST_FRAMEWORK = {
 	'rest_framework.authentication.SessionAuthentication',
     ),
     'DEFAULT_RENDER_CLASSES': ('rest_framework.renders.JSONRender'),
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 10,
+    'DEFAULT_THROTTLE_CLASSES': (
+	'api.throttles.BurstRateThrottle',
+	'api.throttles.SustainedRateThrottle'
+    ),
+    'DEFAULT_THROTTLE_RATES': {
+	'burst': '6/min',
+	'sustained': '10/day'
+    }
 }
 
 SWAGGER_SETTINGS = {

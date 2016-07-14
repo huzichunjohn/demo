@@ -5,8 +5,12 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.throttling import UserRateThrottle
 from api.serializers import UserSerializer, GroupSerializer, BlogSerializer
 from blog.models import Blog
+
+class OncePerDayUserThrottle(UserRateThrottle):
+    rate = '20/day'
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
@@ -30,7 +34,9 @@ class ExampleView(APIView):
 class BlogList(generics.ListCreateAPIView):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
+    throttle_classes = (OncePerDayUserThrottle,)
 
 class BlogDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
+

@@ -10,7 +10,7 @@ class Blog(models.Model):
     title = models.CharField(max_length=100)
     body = models.TextField()
     timestamp = models.DateTimeField() 
-    owner = models.ForeignKey(User)
+    owner = models.ForeignKey(User, related_name='blogs')
 
     class Meta:
         db_table = u'blog'

@@ -3,9 +3,11 @@ from rest_framework import serializers
 from blog.models import Blog
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
+    blogs = serializers.PrimaryKeyRelatedField(many=True, queryset=Blog.objects.all())
+
     class Meta:
 	model = User
-	fields = ('url', 'username', 'email', 'groups')
+	fields = ('url', 'username', 'email', 'groups', 'blogs')
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
