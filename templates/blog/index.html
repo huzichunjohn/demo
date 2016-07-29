@@ -5,6 +5,7 @@
   <a href="{% url 'django.contrib.auth.views.logout' %}">logout</a>
   <a href="{% url 'django.contrib.auth.views.login' %}">login</a>
   <a href="{% url 'blog:add' %}">add blog</a>
+  <a href="{% url 'blog:download' %}" target="_blank">download excel</a>
   <a href="{% url 'blog:download' %}">download excel</a>
   {% if user.is_authenticated %}
     <p>welcome {{ user.username }}.</p>
