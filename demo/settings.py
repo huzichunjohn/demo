@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'django_crontab',
     'debug_toolbar',
     'blog',
+    'todo',
     'rest_framework',
     'rest_framework_swagger',
     'rest_framework.authtoken',

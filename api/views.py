@@ -8,8 +8,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.throttling import UserRateThrottle
-from api.serializers import UserSerializer, GroupSerializer, BlogSerializer
+from api.serializers import UserSerializer, GroupSerializer, BlogSerializer, TodoSerializer
 from blog.models import Blog
+from todo.models import Todo
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 class OncePerDayUserThrottle(UserRateThrottle):
@@ -22,6 +23,10 @@ class UserViewSet(viewsets.ModelViewSet):
 class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+
+class TodoViewSet(viewsets.ModelViewSet):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
 
 class ExampleView(APIView):
     authentication_classes = (TokenAuthentication,)
