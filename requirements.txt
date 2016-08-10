@@ -9,6 +9,8 @@ django-rest-auth==0.7.0
 django-rest-swagger==0.3.7
 djangorestframework==3.3.3
 djangorestframework-jwt==1.8.0
+gevent==1.1.2
+greenlet==0.4.10
 gunicorn==19.6.0
 lazy-object-proxy==1.2.2
 meld3==1.0.2
@@ -26,6 +28,7 @@ pytz==2016.4
 PyYAML==3.11
 requests==2.10.0
 requests-oauthlib==0.6.1
+setproctitle==1.1.10
 six==1.10.0
 sqlparse==0.1.19
 supervisor==3.3.1
