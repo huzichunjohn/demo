@@ -1,0 +1,25 @@
+{
+  "name": "demo",
+  "homepage": "https://github.com/huzichunjohn/demo",
+  "authors": [
+    "johnhu <huzichunjohn@126.com>"
+  ],
+  "description": "just a test.",
+  "keywords": [
+    "django",
+    "angularjs"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.0",
+    "bootstrap": "^3.3.7",
+    "angular": "angularjs#^1.5.8"
+  }
+}
