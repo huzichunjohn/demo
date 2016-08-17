@@ -7,6 +7,7 @@ from .forms import RegistrationForm
 from datetime import datetime
 import json
 from django.core.cache import cache
+from django.views.generic.base import TemplateView
 
 def register(request):
     if request.method == 'POST':
@@ -22,9 +23,9 @@ def register(request):
 def register_done(request):
     return render_to_response('register_done.html')
 
-def index(request):
-    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    return HttpResponse(json.dumps({"datetime": now}), content_type='application/json')
+#def index(request):
+#    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+#    return HttpResponse(json.dumps({"datetime": now}), content_type='application/json')
 
 def get(request):
     data = cache.get("mydemo")
@@ -35,3 +36,6 @@ def get(request):
 def set(request):
     cache.set("mydemo", "hello world", 60)
     return HttpResponse("ok")
+
+class IndexView(TemplateView):
+    template_name = "index.html"

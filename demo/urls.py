@@ -2,13 +2,14 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 from . import views
+from .views import IndexView
 
 urlpatterns = [
     # Examples:
     # url(r'^$', 'demo.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'^$', views.index, name='index'),
+    url(r'^$', IndexView.as_view(), name='index'),
     url(r'^get/$', views.get, name='get'),
     url(r'^set/$', views.set, name='set'),
     url(r'^blog/', include('blog.urls', namespace='blog')),

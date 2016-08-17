@@ -120,6 +120,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
+
 LOGIN_REDIRECT_URL = '/blog/'
 
 INTERNAL_IPS = ('127.0.0.1',)
