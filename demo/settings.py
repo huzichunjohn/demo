@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'blog',
     'todo',
+    'crequest',
     'rest_framework',
     'rest_framework_swagger',
     'rest_framework.authtoken',
@@ -62,6 +63,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'crequest.middleware.CrequestMiddleware',
 )
 
 ROOT_URLCONF = 'demo.urls'
@@ -113,7 +115,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)

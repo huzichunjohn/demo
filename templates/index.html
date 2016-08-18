@@ -2,12 +2,24 @@
 <html ng-app="demoApp">
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>My Demo</title>
-  <script type="text/javascript" src="/static/bower_components/angular/angular.js"></script>
-  <script type="text/javascript" src="/static/js/app.js"></script>
+  <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css">
 </head>
 <body ng-controller="demoCtrl">
-  <input type="text" ng-model="username" />
-  <h1>hello [[ username ]].</h1>
+  <div class="jumbotron">
+    <div class="container">
+      <div class="col-xs-offset-2 col-xs-8">
+        <div ng-view></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="/static/bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/static/bower_components/angular/angular.js"></script>
+  <script type="text/javascript" src="/static/bower_components/angular-route/angular-route.js"></script>
+  <script type="text/javascript" src="/static/js/app.js"></script>
 </body>
 </html>
