@@ -46,7 +46,6 @@ class Article(models.Model):
 
 class BlogAudit(models.Model):
     username = models.CharField(max_length=20)
-    action = models.CharField(max_length=50)
     ip = models.GenericIPAddressField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
@@ -65,4 +64,12 @@ def delete_audit_log(sender, instance=None, **kwargs):
 @receiver(blog_audit)
 def blog_audit_signal(sender, **kwargs):
     current_request = CrequestMiddleware.get_request()
-    print current_request.META["REMOTE_ADDR"]
+    ip = current_request.META["REMOTE_ADDR"]
+    username = current_request.user.username
+    blogaudit = BlogAudit.objects.create(username=username, ip=ip)
+    blogaudit.save()
+
+class Syslog(models.Model):
+    level = models.CharField(max_length=20)
+    message = models.TextField()
+    timestamp = models.DateTimeField(blank=True, null=True)

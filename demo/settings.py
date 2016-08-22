@@ -51,10 +51,12 @@ INSTALLED_APPS = (
     'allauth.account',
     'rest_auth.registration',
     'django_extensions',
+    'corsheaders',
 )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -122,9 +124,9 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-)
+#STATICFILES_DIRS = (
+#    os.path.join(BASE_DIR, "static"),
+#)
 
 LOGIN_REDIRECT_URL = '/blog/'
 
@@ -147,7 +149,7 @@ DEBUG_TOOLBAR_PANELS = [
 DEBUG_TOOLBAR_CONFIG = {"JQUERY_URL": "http://code.jquery.com/jquery-2.1.1.min.js"}
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.AllowAny',),
     'DEFAULT_AUTHENTICATION_CLASSES': (
 	'rest_framework.authentication.BasicAuthentication',
 	'rest_framework.authentication.TokenAuthentication',
@@ -198,3 +200,41 @@ CACHES = {
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 SESSION_CACHE_ALIAS = 'default'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'syslog': {
+            'level': 'DEBUG',
+            'class': 'demo.loggers.SyslogHandler',
+        },
+    },
+    'loggers': {
+        'demo': {
+            'handlers': ['syslog'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+    },
+}
+
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = (
+    'localhost',
+    'localhost:8080',
+)
+
+CORS_ALLOW_HEADERS = (
+    'x-requested-with',
+    'content-type',
+    'accept-encoding',
+    'accept',
+    'cache-control',
+    'origin',
+    'authorization',
+    'x-csrftoken',
+    'dnt',
+    'access-control-allow-origin'
+)

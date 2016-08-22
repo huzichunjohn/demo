@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.template.context import RequestContext
 from rest_framework import viewsets, status, mixins, generics
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.throttling import UserRateThrottle
@@ -62,3 +62,12 @@ class BlogDetail(generics.RetrieveUpdateDestroyAPIView):
 
 def index(request):
     return render(request, 'api/index.html', context_instance=RequestContext(request))
+
+class ExchangeView(APIView):
+    permission_classes = (AllowAny,)
+
+    def get(self, request):
+        data = {
+            'conversion': 0.00000268
+        }
+        return Response(data)

@@ -12,6 +12,8 @@ from datetime import datetime
 from pytz import timezone
 import StringIO
 import xlsxwriter
+import logging
+logger = logging.getLogger("demo")
 
 @login_required
 def index(request):
@@ -33,6 +35,7 @@ def index(request):
     return render_to_response("blog/index.html", {'blogs': blogs}, context_instance=RequestContext(request))
 
 def hello(request):
+    logger.error("oh my god.")
     return HttpResponse("Hello world.")
 
 @login_required

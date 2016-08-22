@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^api-token-auth', jwt_views.obtain_jwt_token),
     url(r'^example/$', views.ExampleView.as_view(), name='example'),
     url(r'^restricted/$', views.RestrictedView.as_view(), name='restricted'),
+    url(r'^exchange/$', views.ExchangeView.as_view(), name='exchange'),
     url(r'^blog/$', views.BlogList.as_view(), name='blog'),
     url(r'^blog/(?P<pk>[0-9]+)/$', views.BlogDetail.as_view(), name='blog-detail'),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),

@@ -37,5 +37,5 @@ def set(request):
     cache.set("mydemo", "hello world", 60)
     return HttpResponse("ok")
 
-class IndexView(TemplateView):
-    template_name = "index.html"
+#class IndexView(TemplateView):
+#    template_name = "index.html"
