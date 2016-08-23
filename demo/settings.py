@@ -66,6 +66,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'crequest.middleware.CrequestMiddleware',
+    'audit_log.middleware.UserLoggingMiddleware',
 )
 
 ROOT_URLCONF = 'demo.urls'

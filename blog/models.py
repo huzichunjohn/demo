@@ -7,6 +7,7 @@ from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 from blog.signals import blog_audit
 from crequest.middleware import CrequestMiddleware
+from audit_log.models.managers import AuditLog
 
 class Blog(models.Model):
     title = models.CharField(max_length=100)
@@ -73,3 +74,10 @@ class Syslog(models.Model):
     level = models.CharField(max_length=20)
     message = models.TextField()
     timestamp = models.DateTimeField(blank=True, null=True)
+
+class Product(models.Model):
+    name = models.CharField(max_length=20)
+    description = models.TextField()
+    price = models.DecimalField(max_digits=4, decimal_places=2)
+
+    audit_log = AuditLog()

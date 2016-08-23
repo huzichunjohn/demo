@@ -11,6 +11,12 @@ var demoApp = angular.module("demoApp", []);
 
 demoApp
 
+.config(['$httpProvider', function($httpProvider) {
+  $httpProvider.defaults.withCredentials = true;
+
+}])
+
+
 .factory('Exchange', function($http) {
   return {
     getConversion: function () {
