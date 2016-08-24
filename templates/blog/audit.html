@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}audit{% endblock %}
+
+{% block content %}
+<ul>
+{% for audit in audits %}
+<li>{{ audit.action_id }} - {{ audit.id }} - {{ audit.name }} - {{ audit.description }} - {{ audit.price }} - {{ audit.action_date }} - {{ audit.action_type }} - {{ audit.action_user }}</li>
+{% endfor %}
+</ul>
+{% endblock %}

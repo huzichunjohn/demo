@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}edit product{% endblock %}
+
+{% block content %}
+
+  <h2>edit product</h2>
+  <form action="{% url 'blog:product_edit' product.id %}" method="post">
+    {% csrf_token %}
+    <table>
+      {{ form.as_table }}
+    </table>
+    <input type="submit" value="edit" />
+  </form>
+
+{% endblock %}

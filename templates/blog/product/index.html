@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}product{% endblock %}
+
+{% block content %}
+
+  {% for product in products %}
+    <h2>{{ product.id }} {{ product.name }}</h2>
+    <p>{{ product.price }}</p>
+    <p>{{ product.description }}</p>
+    <a href="{% url 'blog:product_edit' product.id %}">edit</a>
+    <form method="post" action="{% url 'blog:product_delete' product.id %}">
+      {% csrf_token %}
+      <input type="submit" value="delete">
+    </form>
+    <a href="{% url 'blog:product_delete' product.id %}">delete</a> 
+  {% endfor %}
+
+{% endblock %}

@@ -5,8 +5,8 @@ from django.core.context_processors import csrf
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .forms import BlogForm
-from .models import Blog
+from .forms import BlogForm, ProductForm
+from .models import Blog, Product
 
 from datetime import datetime
 from pytz import timezone
@@ -103,8 +103,42 @@ def download(request):
 	worksheet.write_string(index+1, 2, blog.owner.username)
     workbook.close()
 
-    output = buffer.getvalue()    
+    output = buffer.getvalue()
     response = HttpResponse(content_type="application/vnd.ms-excel")
     response['Content-Disposition'] = 'attachment; filename=blog.xlsx'
     response.write(output)
     return response
+
+def audit(request):
+    audits = Product.audit_log.all()
+    return render_to_response('blog/audit.html', {"audits": audits}, context_instance=RequestContext(request))
+
+def product_index(request):
+    products = Product.objects.all()
+    return render_to_response('blog/product/index.html', {'products': products}, context_instance=RequestContext(request))
+
+def product_edit(request, id):
+    try:
+        product = Product.objects.get(id=id)
+    except Product.DoesNotExist:
+        raise Http404
+
+    if request.method == "POST":
+        form = ProductForm(request.POST, instance=product)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('blog:product_index'))
+    else:
+        form = ProductForm(instance=product)
+
+    return render_to_response('blog/product/edit.html', {"form": form, "product": product}, context_instance=RequestContext(request))
+
+def product_delete(request, id):
+    if request.method == "POST":
+        try:
+            product = Product.objects.get(id=id)
+        except Product.DoesNotExist:
+            raise Http404
+    
+        product.delete()
+        return HttpResponse("ok")
