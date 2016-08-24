@@ -2,6 +2,7 @@ astroid==1.4.5
 colorama==0.3.7
 Django==1.8
 django-allauth==0.25.2
+django-audit-log==0.7.0
 django-cors-headers==1.1.0
 django-crequest==2014.9.19
 django-crontab==0.7.1
@@ -14,6 +15,8 @@ django-websocket-redis==0.4.6
 djangorestframework==3.3.3
 djangorestframework-jwt==1.8.0
 gevent==1.1.2
+gitdb==0.6.4
+GitPython==2.0.8
 greenlet==0.4.10
 gunicorn==19.6.0
 lazy-object-proxy==1.2.2
@@ -35,6 +38,7 @@ requests==2.10.0
 requests-oauthlib==0.6.1
 setproctitle==1.1.10
 six==1.10.0
+smmap==0.9.0
 sqlparse==0.1.19
 supervisor==3.3.1
 wrapt==1.10.8
