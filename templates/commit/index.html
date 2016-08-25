@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}commits{% endblock %}
+
+{% block content %}
+<ul>
+{% for commit in commits %}
+<li>
+{{ commit.author }} - {{ commit.committed_date }} - {{ commit.message }} - {{ commit.summary }} - {{ commit.hexsha }} 
+<form method="post" action="{% url 'commit:index' %}">
+    {% csrf_token %}
+    <input type="hidden" name="rollback" value="{{ commit.hexsha }}">
+    <input type="submit" value="rollback">
+</form>
+</li>
+{% endfor %}
+</ul>
+{% endblock %}
