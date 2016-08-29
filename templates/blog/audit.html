@@ -3,8 +3,40 @@
 
 {% block content %}
 <ul>
+<table>
+<tr>
+  <th>id</th>
+  <th>name</th>
+  <th>description</th>
+  <th>price</th>
+  <th>action_id</th>
+  <th>action_date</th>
+  <th>action_type</th>
+  <th>action_user</th>
+</tr>
 {% for audit in audits %}
-<li>{{ audit.action_id }} - {{ audit.id }} - {{ audit.name }} - {{ audit.description }} - {{ audit.price }} - {{ audit.action_date }} - {{ audit.action_type }} - {{ audit.action_user }}</li>
+<tr>
+  <td>{{ audit.id }}</td>
+  <td>{{ audit.name }}</td>
+  <td>{{ audit.description }}</td>
+  <td>{{ audit.price }}</td>
+  <td>{{ audit.action_id }}</td>
+  <td>{{ audit.action_date }}</td>
+
+  {% if audit.action_type == "I" %}
+    <td>insert</td>
+  {% elif audit.action_type == "U" %}
+    <td>update</td>
+  {% else %}
+    <td>delete</td>
+  {% endif %}
+
+  {% if audit.action_user == None %}
+    <td>-</td>
+  {% else %}
+    <td>{{ audit.action_user }}</td>
+  {% endif %}
+</tr>
 {% endfor %}
 </ul>
 {% endblock %}
