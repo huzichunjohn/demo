@@ -11,3 +11,6 @@
 
 {% verbatim %}
 {% endverbatim %}
+
+## Generate the model graph
+```python manage.py graph_models -o demo.png```

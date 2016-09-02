@@ -239,3 +239,8 @@ CORS_ALLOW_HEADERS = (
     'dnt',
     'access-control-allow-origin'
 )
+
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
+}
