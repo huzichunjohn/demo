@@ -52,6 +52,7 @@ INSTALLED_APPS = (
     'rest_auth.registration',
     'django_extensions',
     'corsheaders',
+    'logentry_admin',
 )
 
 MIDDLEWARE_CLASSES = (
