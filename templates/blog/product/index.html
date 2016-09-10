@@ -2,6 +2,18 @@
 {% block title %}product{% endblock %}
 
 {% block content %}
+  <a href="{% url 'blog:product_add' %}">add product</a>
+
+  {% for action in actions %}
+    <div>
+      {{ action.icon }} {{ action.message|safe }}<br/>
+      <small>{{ action.user }} - {{ action.time|date:'SHORT_DATETIME_FORMAT' }}</small>
+    </div>
+  {% empty %}
+    <div>
+      Welcome to my demo!
+    </div>
+  {% endfor %}
 
   {% for product in products %}
     <h2>{{ product.id }} {{ product.name }}</h2>

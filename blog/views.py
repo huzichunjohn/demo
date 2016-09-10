@@ -1,12 +1,12 @@
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, get_object_or_404
 from django.core.context_processors import csrf
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import BlogForm, ProductForm
-from .models import Blog, Product
+from .models import Blog, Product, UserAction
 
 from datetime import datetime
 from pytz import timezone
@@ -113,10 +113,36 @@ def audit(request):
     audits = Product.audit_log.all()
     return render_to_response('blog/audit.html', {"audits": audits}, context_instance=RequestContext(request))
 
+@login_required
+def product_detail(request, id):
+    product = get_object_or_404(Product, id=id)
+    return render(request, 'blog/product/detail.html', {"product": product})
+
+@login_required
 def product_index(request):
     products = Product.objects.all()
-    return render_to_response('blog/product/index.html', {'products': products}, context_instance=RequestContext(request))
+    actions = UserAction.objects.all()
+    return render_to_response('blog/product/index.html', {'products': products, 'actions': actions}, context_instance=RequestContext(request))
 
+@login_required
+def product_add(request):
+    if request.method == "POST":
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            product = form.save()
+
+            msg = u'Created product'
+            if hasattr(product, 'get_absolute_url'):
+                msg = u'{0} <a href="{1}">{2}</a>'.format(msg, product.get_absolute_url(), product)
+            else:
+                msg = u'{0} {1}'.format(msg, product)
+            UserAction.objects.log_create(request.user, product, msg)
+            return HttpResponseRedirect(reverse('blog:product_index'))
+    else:
+        form = ProductForm()
+    return render_to_response('blog/product/add.html', {"form": form}, context_instance=RequestContext(request))
+
+@login_required
 def product_edit(request, id):
     try:
         product = Product.objects.get(id=id)
@@ -126,19 +152,31 @@ def product_edit(request, id):
     if request.method == "POST":
         form = ProductForm(request.POST, instance=product)
         if form.is_valid():
-            form.save()
+            product = form.save()
+            
+            msg = u'Modified product'
+            if hasattr(product, 'get_absolute_url'):
+                msg = u'{0} <a href="{1}">{2}</a>'.format(msg, product.get_absolute_url(), product)
+            else:
+                msg = u'{0} {1}'.format(msg, product)
+            UserAction.objects.log_edit(request.user, product, msg)
+
             return HttpResponseRedirect(reverse('blog:product_index'))
     else:
         form = ProductForm(instance=product)
 
     return render_to_response('blog/product/edit.html', {"form": form, "product": product}, context_instance=RequestContext(request))
 
+@login_required
 def product_delete(request, id):
-    if request.method == "POST":
-        try:
-            product = Product.objects.get(id=id)
-        except Product.DoesNotExist:
-            raise Http404
+    try:
+        product = Product.objects.get(id=id)
+    except Product.DoesNotExist:
+        raise Http404
     
-        product.delete()
-        return HttpResponse("ok")
+    product.delete()
+
+    msg = u'Deleted product {0}'.format(product)
+    UserAction.objects.log_delete(request.user, product, msg)
+
+    return HttpResponse("ok")

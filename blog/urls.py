@@ -11,6 +11,8 @@ urlpatterns = patterns('blog',
     url(r'^delete/(?P<id>[0-9]+)/$', views.delete, name='delete'),
     url(r'^audit/$', views.audit, name='audit'),
     url(r'product_index/$', views.product_index, name='product_index'),
+    url(r'product/(?P<id>[0-9]+)/$', views.product_detail, name='product_detail'),
+    url(r'product_add/$', views.product_add, name='product_add'),
     url(r'^product_edit/(?P<id>[0-9]+)/$', views.product_edit, name='product_edit'),
     url(r'^product_delete/(?P<id>[0-9]+)/$', views.product_delete, name='product_delete'),
 )
