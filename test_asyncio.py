@@ -6,13 +6,13 @@ import concurrent
 def clock():
     while True:
         print("Current time from asynchronous code: {}".format(int(time.time())))
-        yield from asynio.sleep(1)
+        yield from asyncio.sleep(1)
 
 def blocking():
     while True:
         print("Current time from blocking code: {}".format(int(time.time())))
         time.sleep(1)
-	raise Exception("Test")
+        raise Exception("Test")
 
 def main():
     loop = asyncio.get_event_loop()

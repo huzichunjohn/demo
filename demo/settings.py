@@ -245,3 +245,8 @@ GRAPH_MODELS = {
   'all_applications': True,
   'group_models': True,
 }
+
+ADMIN_LOGIN = 'admin'
+ADMIN_PASSWORD = 'pbkdf2_sha256$20000$2t8yfDfkiiGe$o5lWDPuT0Z3wRpmYHghL3k36kxhnvwSszK1H9ZqW+K8='
+
+AUTHENTICATION_BACKENDS = ['demo.backends.SettingsBackend', 'django.contrib.auth.backends.ModelBackend']
