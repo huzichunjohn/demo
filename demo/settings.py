@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'blog',
     'todo',
+    'django_extlog',
     'crequest',
     'rest_framework',
     'rest_framework_swagger',
@@ -68,6 +69,7 @@ MIDDLEWARE_CLASSES = (
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'crequest.middleware.CrequestMiddleware',
     'audit_log.middleware.UserLoggingMiddleware',
+    'django_extlog.middleware.AuditLoggingMiddleware',
 )
 
 ROOT_URLCONF = 'demo.urls'
