@@ -343,3 +343,59 @@ s = """My name is ${'Mr. ' + name + ', Esquire'}.
 I have visited the following cities: ${', '.join(places)}.
 """
 print interpolate(s)
+
+def method_decorator(fn):
+    print fn
+    def decorator(*args, **kwargs):
+        print args, kwargs
+        print "\tinside the decorator"
+        return fn(*args, **kwargs)
+    return decorator
+
+class MyFirstClass(object):
+    #@method_decorator
+    def first_method(self, *args, **kwargs):
+        print "\t\tthis is the MyFirstClass.first_method"
+    #first_method = method_decorator(first_method)
+
+    #@method_decorator
+    def second_method(self, *args, **kwargs):
+        print "\t\tthis is the MyFirstClass.second_method"
+    #second_method = method_decorator(second_method)
+
+def class_decorator(*method_names):
+    def class_rebuilder(cls):
+        print cls
+        class NewClass(cls):
+            def __getattribute__(self, attr_name):
+                obj = super(NewClass, self).__getattribute__(attr_name)
+                print obj
+                if hasattr(obj, "__call__") and attr_name in method_names:
+                    return method_decorator(obj)
+                return obj
+
+        return NewClass
+    return class_rebuilder
+
+@class_decorator('first_method', 'second_method')
+class MySecondClass(object):
+    def first_method(self, *args, **kwargs):
+        print "\t\tthis is the MySecondClass.first_method"
+
+    def second_method(self, *args, **kwargs):
+        print "\t\tthis is the MySecondClass.second_method"
+
+    def third_method(self, *args, **kwargs):
+        print "\t\tthis is the MySecondClass.third_method"
+
+if __name__ == "__main__":
+    #x = MyFirstClass()
+    #x.first_method("my first method")
+    #x.second_method("my second method")
+    #print MyFirstClass.__dict__
+    
+    y = MySecondClass()
+    y.first_method("my first method", a=1)
+    y.second_method("my second method", b=2)
+    y.third_method("my third method", c=3)
+
