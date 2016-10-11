@@ -9,7 +9,7 @@ ignore=test
 # W0511: TODOs in code comments are fine.
 # W0142: *args and **kwargs are fine.
 # W0622: Redefining id is fine.
-disable=C0111,W0511,W0142,W0622,C0103
+disable=C0111,W0511,W0142,W0622
 
 [Basic]
 # Variable names can be 1 to 31 characters long, with lowercase and underscores
@@ -39,3 +39,8 @@ max-args=6
 # you should avoid to define new builtins when possible.
 # _ is used by our localization
 additional-builtins=_
+
+[pre-commit-hook]
+command=pylint
+params=--rcfile=./.pylintrc
+limit=6.0
