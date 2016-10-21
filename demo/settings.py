@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'crequest',
     'rest_framework',
     'rest_framework_swagger',
+    'rest_framework_docs',
     'rest_framework.authtoken',
     'rest_auth',
     'allauth',
@@ -253,3 +254,7 @@ ADMIN_LOGIN = 'admin'
 ADMIN_PASSWORD = 'pbkdf2_sha256$20000$2t8yfDfkiiGe$o5lWDPuT0Z3wRpmYHghL3k36kxhnvwSszK1H9ZqW+K8='
 
 AUTHENTICATION_BACKENDS = ['demo.backends.SettingsBackend', 'django.contrib.auth.backends.ModelBackend']
+
+REST_FRAMEWORK_DOCS = {
+    'HIDE_DOCS': os.environ.get('HIDE_DRFDOCS', False)
+}

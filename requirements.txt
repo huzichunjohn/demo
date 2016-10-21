@@ -18,6 +18,7 @@ django-rest-swagger==0.3.7
 django-websocket-redis==0.4.6
 djangorestframework==3.3.3
 djangorestframework-jwt==1.8.0
+drfdocs==0.0.11
 future==0.15.2
 gevent==1.1.2
 git-pylint-commit-hook==2.2.1
