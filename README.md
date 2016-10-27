@@ -14,3 +14,6 @@
 
 ## Generate the model graph
 ```python manage.py graph_models -o demo.png```
+
+## Generate some dummy test data for student
+```python manage.py dummy-data 1000```

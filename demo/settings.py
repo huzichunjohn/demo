@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'blog',
     'todo',
+    'student',
     'django_extlog',
     'crequest',
     'rest_framework',
