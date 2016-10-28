@@ -90,6 +90,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'blog.context_processors.info',
             ],
         },
     },
@@ -259,3 +260,5 @@ AUTHENTICATION_BACKENDS = ['demo.backends.SettingsBackend', 'django.contrib.auth
 REST_FRAMEWORK_DOCS = {
     'HIDE_DOCS': os.environ.get('HIDE_DRFDOCS', False)
 }
+
+GEOIP_PATH = "/tmp/GeoLiteCity.dat"

@@ -8,6 +8,7 @@
   <a href="{% url 'blog:add' %}">add blog</a>
   <a href="{% url 'blog:download' %}" target="_blank">download excel</a>
   <a href="{% url 'blog:download' %}">download excel</a>
+  <p>info: <b>{{ name }}</b>({{ age }})</p>
   {% if user.is_authenticated %}
     <p>welcome {{ user.username }}.</p>
   {% endif %}  

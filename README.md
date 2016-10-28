@@ -17,3 +17,5 @@
 
 ## Generate some dummy test data for student
 ```python manage.py dummy-data 1000```
+
+[seqdiag](http://blockdiag.com/en/seqdiag/index.html)
