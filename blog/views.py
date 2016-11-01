@@ -15,6 +15,10 @@ import xlsxwriter
 import logging
 logger = logging.getLogger("demo")
 
+from metrology import Metrology
+import random
+import time
+
 @login_required
 def index(request):
     #if request.user.is_superuser:
@@ -34,7 +38,12 @@ def index(request):
 
     return render_to_response("blog/index.html", {'blogs': blogs}, context_instance=RequestContext(request))
 
+#@Metrology.timer('hello')
+def sleep_random_seconds():
+    time.sleep(random.randint(1, 3))
+
 def hello(request):
+    sleep_random_seconds()
     logger.error("oh my god.")
     return HttpResponse("Hello world.")
 

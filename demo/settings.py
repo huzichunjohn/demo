@@ -73,6 +73,7 @@ MIDDLEWARE_CLASSES = (
     'crequest.middleware.CrequestMiddleware',
     'audit_log.middleware.UserLoggingMiddleware',
     'django_extlog.middleware.AuditLoggingMiddleware',
+    'demo.middleware.RequestMetricsMiddleware',
 )
 
 ROOT_URLCONF = 'demo.urls'
@@ -262,3 +263,11 @@ REST_FRAMEWORK_DOCS = {
 }
 
 GEOIP_PATH = "/tmp/GeoLiteCity.dat"
+
+import logging
+logging.basicConfig(level=logging.INFO)
+
+from metrology import Metrology
+from metrology.reporter.logger import LoggerReporter
+reporter = LoggerReporter(level=logging.INFO, interval=5)
+reporter.start()
