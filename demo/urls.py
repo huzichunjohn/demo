@@ -12,6 +12,7 @@ urlpatterns = [
     #url(r'^$', IndexView.as_view(), name='index'),
     url(r'^get/$', views.get, name='get'),
     url(r'^set/$', views.set, name='set'),
+    url(r'^todo/', include('todo.urls', namespace='todo')),
     url(r'^blog/', include('blog.urls', namespace='blog')),
     url(r'^upload/', include('upload.urls')),
     url(r'^download/', include('download.urls')),

@@ -269,5 +269,5 @@ logging.basicConfig(level=logging.INFO)
 
 from metrology import Metrology
 from metrology.reporter.logger import LoggerReporter
-reporter = LoggerReporter(level=logging.INFO, interval=5)
-reporter.start()
+#reporter = LoggerReporter(level=logging.INFO, interval=5)
+#reporter.start()
