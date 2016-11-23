@@ -271,3 +271,6 @@ from metrology import Metrology
 from metrology.reporter.logger import LoggerReporter
 #reporter = LoggerReporter(level=logging.INFO, interval=5)
 #reporter.start()
+
+#SESSION_COOKIE_AGE = 30
+#ESSION_EXPIRE_AT_BROWSER_CLOSE = False
