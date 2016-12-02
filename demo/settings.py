@@ -273,4 +273,4 @@ from metrology.reporter.logger import LoggerReporter
 #reporter.start()
 
 #SESSION_COOKIE_AGE = 30
-#ESSION_EXPIRE_AT_BROWSER_CLOSE = False
+#SESSION_EXPIRE_AT_BROWSER_CLOSE = False
