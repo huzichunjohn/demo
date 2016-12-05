@@ -287,3 +287,70 @@ def filter_content(conn, id, method, name, args, quit):
 	    break
 
     pubsub.reset()
+
+def SampleFilter(id, args):
+    percent = int(args.get('percent', ['10'])[0], 10)
+    ids = range(100)
+    shuffler = random.Random(id)
+    shuffler.shuffle(ids)
+    keep = set(ids[:max(percent, 1)])
+    
+    def check(status):
+	return (status['id'] % 100) in keep
+    return check
+
+def TrackFilter(list_of_strings):
+    groups = []
+    for group in list_of_strings:
+	group = set(group.lower().split())
+	if group:
+	    groups.append(group)
+
+    def check(status):
+	message_words = set(status['message'].lower().split())
+	for group in groups:
+	    if len(group & message_words) == len(group):
+		return True
+	return False
+    return check
+
+def FollowFilter(names):
+    names = set()
+    for name in names:
+	names.add('@' + name.lower().lstrip('@'))
+
+    def check(status):
+	message_words = set(status['message'].lower().split())
+	message_words.add('@' + status['login'].lower())
+
+	return message_words & names
+    return check
+
+def LocationFilter(list_of_boxes):
+    boxes = []
+    for start in xrange(0, len(list_of_boxes)-3, 4):
+	boxes.append(map(float, list_of_boxes[start:start+4]))
+
+    def check(self, status):
+	location = status.get('location')
+	if not location:
+	    return False
+
+	lat, lon = map(float, location.split(','))
+	for box in self.boxes:
+	    if (box[1] <= lat <= box[3] and
+		box[0] <= lon <= box[2]):
+		return True
+	return False
+    return check
+
+def create_filters(id, method, name, args):
+    if method == 'sample':
+	return SampleFilter(id, args)
+    elif name == 'track':
+	return TrackFilter(args)
+    elif name == 'follow':
+	return FollowFilter(args)
+    elif name == 'location':
+	return LocationFilter(args)
+    raise Exception("Unknown filter")
