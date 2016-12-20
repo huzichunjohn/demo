@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
+from bitfield import BitField
 
 # Create your models here.
 class Todo(models.Model):
@@ -41,3 +42,11 @@ class Task(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class MyModel(models.Model):
+    flags = BitField(flags=(
+	('awesome_flag', 'Awesome Flag!'),
+	('flaggy_foo', 'Flaggy Foo'),
+	('baz_bar', 'Baz (bar)'),
+    ))
